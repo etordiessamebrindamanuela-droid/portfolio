@@ -1444,3 +1444,38 @@ img{
     max-width:100%;
     display:block;
 }
+/* ==========================
+        LOADER
+========================== */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+    transition:opacity .6s;
+}
+
+.spinner{
+    width:60px;
+    height:60px;
+    border:6px solid #dbeafe;
+    border-top:6px solid #2563eb;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+    100%{
+        transform:rotate(360deg);
+    }
+
+}
+
+body.dark-mode #loader{
+    background:#0f172a;
+}
