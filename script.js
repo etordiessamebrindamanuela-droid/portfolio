@@ -1,71 +1,73 @@
-// ==========================
-// MODE SOMBRE
-// ==========================
-
-const themeButton = document.getElementById("theme-toggle");
-
-themeButton.addEventListener("click", () => {
-
-    document.body.classList.toggle("dark-mode");
-
-    const icon = themeButton.querySelector("i");
-
-    if(document.body.classList.contains("dark-mode")){
-
-        icon.classList.remove("fa-moon");
-        icon.classList.add("fa-sun");
-
-    }else{
-
-        icon.classList.remove("fa-sun");
-        icon.classList.add("fa-moon");
-
-    }
-
-});
 // ==============================
-// Apparition progressive des sections
+// APPARITION DES SECTIONS
 // ==============================
 
-const sections = document.querySelectorAll("section");
+const elements = document.querySelectorAll(
+".about, .skills, .projects, .timeline, .certifications, .vision, .contact"
+);
 
-sections.forEach(section=>{
-    section.classList.add("hidden");
+elements.forEach(el=>{
+    el.classList.add("hidden");
 });
 
 const observer = new IntersectionObserver(entries=>{
-
     entries.forEach(entry=>{
-
         if(entry.isIntersecting){
-
             entry.target.classList.add("show");
-
         }
-
     });
-
 },{
     threshold:0.2
 });
 
-sections.forEach(section=>{
+elements.forEach(el=>{
+    observer.observe(el);
+});
 
-    observer.observe(section);
+
+// ==============================
+// ANIMATION DES BARRES
+// ==============================
+
+const bars = document.querySelectorAll(".progress-bar");
+
+bars.forEach(bar=>{
+
+    const width = bar.style.width;
+
+    bar.style.width="0";
+
+    setTimeout(()=>{
+        bar.style.width=width;
+    },500);
 
 });
-window.addEventListener("load", () => {
 
-    setTimeout(() => {
 
-        document.getElementById("loader").style.opacity = "0";
+// ==============================
+// EFFET MACHINE À ÉCRIRE
+// ==============================
 
-        setTimeout(() => {
+const titre=document.querySelector(".hero-text h1");
 
-            document.getElementById("loader").style.display = "none";
+const texte=titre.textContent;
 
-        },600);
+titre.textContent="";
 
-    },1000);
+let i=0;
 
-});
+function ecrire(){
+
+    if(i<texte.length){
+
+        titre.textContent+=texte.charAt(i);
+
+        i++;
+
+        setTimeout(ecrire,80);
+
+    }
+
+}
+
+window.onload=ecrire;
